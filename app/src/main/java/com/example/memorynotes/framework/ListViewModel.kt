@@ -18,8 +18,7 @@ class ListViewModel @Inject constructor(private val useCases: UseCases) : ViewMo
 
     private fun getNotes() {
         viewModelScope.launch {
-            val noteList = useCases.getAllNotes()
-            noteList.collect { notesList ->
+            useCases.getAllNotes().collect { notesList ->
                 notesList.map { it.wordCount = getCount(it.title + it.content) }
                 notes.postValue(notesList)
             }
